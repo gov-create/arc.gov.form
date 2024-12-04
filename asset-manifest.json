@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/arc.gov.form.au/static/css/main.6c16ac76.css",
+    "main.js": "/arc.gov.form.au/static/js/main.d3b3e8b7.js",
+    "static/media/logo222.jpg": "/arc.gov.form.au/static/media/logo222.7c1bb73e28ae9722a279.jpg",
+    "index.html": "/arc.gov.form.au/index.html",
+    "main.6c16ac76.css.map": "/arc.gov.form.au/static/css/main.6c16ac76.css.map",
+    "main.d3b3e8b7.js.map": "/arc.gov.form.au/static/js/main.d3b3e8b7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6c16ac76.css",
+    "static/js/main.d3b3e8b7.js"
+  ]
+}
