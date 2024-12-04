@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ExamForm from './ExamForm';
 import OTPValidation from './OTPValidation';
 
-const basename = '/Depaul-Uni-Exam-Form-Pay';
+const basename = '/arc.gov.form.au';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
