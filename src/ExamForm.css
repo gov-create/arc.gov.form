@@ -1,4 +1,25 @@
   .card {
     background-color: #f8f9fa8c;
   }
+
+  .dropdown-with-icon {
+    position: relative;
+  }
+  
+  .dropdown-with-icon select {
+    appearance: none; /* Hides default arrow */
+    padding-right: 25px; /* Space for custom arrow */
+  }
+  
+  .dropdown-with-icon .dropdown-icon {
+    position: absolute;
+    right: 10px;
+    /* top: 50%; */
+    top: 50px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 30px; /* Adjust arrow size */
+    color: #666;
+  }
+  
   
